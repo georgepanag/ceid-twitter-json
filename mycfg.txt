@@ -1,0 +1,35 @@
+<JSON> ::= { <1FIELD> }
+
+<1FIELD> ::= "created_at": <DATE>  | "id_str": <TEXT>  | "user": <USER> | "text": <TEXT> 
+
+<FIELD> ::= ,"created_at": <DATE> <FIELD> | ,"id_str": <TEXT> <FIELD> | ,"user": <USER> <FIELD> | ,"text": <TEXT> <FIELD> | ε 
+
+<TEXT> ::= " <CONTENT> "
+
+<CONTENT> ::= a | ... | Z | 0 | 1 | ... | @ | ... | : | \" | ε | <CONTENT> <CONTENT>
+/*            ALL CHARACTERS EXCEPT " WHICH IS ESCAPED               */
+
+<NUMBER> ::= <DIGITS> <DEC> <EXP> 
+
+<DIGIT> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+<DIGITS> ::= <DIGIT> <DIGITS> | ε
+
+<DEC> ::= . <DIGITS> | ε
+
+<EXP> ::= e+ <DIGITS> | e- <DIGITS>
+
+<ARRAY> ::= [ <ELEM> ] 
+
+<ELEM> ::= <NUMBER> | <TEXT> | <ARRAY> | ε | <ELEM> , <ELEM> 
+
+<DATE> ::= " <DATECONT> "
+
+<DATECONT> ::= <DAY> <MONTH> <DATE> <TIME> <YEAR>
+
+<DAY> ::= Mon | Tue | Wed | Thu | Fri | Sat | Sun
+
+<MONTH> ::= Jan | Feb | Mar | Apr | May | Jun | Jul | Aug | Sep | Oct | Nov | Dec
+
+
+

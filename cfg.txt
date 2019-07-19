@@ -1,0 +1,25 @@
+<JSON File>	::= { <FIELD> }
+<FIELD>	::= "text": <TEXT> | "created_at": <DATE> | "user": <USER> | "id_str": <INT> | <FIELD> <FIELD> | | ,
+
+<TEXT> ::= " <CONTENT> "
+<CONTENT> ::= <CHAR> | <ESCAPEDQ> | <CONTENT> <CONTENT> |
+<ESCAPEQ> ::= \"
+<CHAR> ::= <LETTER> | <DIGIT> | <CHAR> <CHAR> | <SPECIAL> 
+<LETTER> ::= A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z | a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z
+<DIGIT> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+<SPECIAL> ::= \
+
+/* JSON NUMBER */
+
+<DIGIT1to9>	::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 
+<DIGITS>	::= <DIGIT> | <DIGITS> <DIGIT> 
+<INT> 		::= <DIGIT> | <DIGIT1to9> <DIGITS> | -<DIGIT> | - <DIGIT1to9> <DIGITS>
+<FRAC> 		::= . <DIGITS>
+<EXP>		::= e <INT> 	
+<NUMBER>	::= <INT> | <INT> <FRAC> | <INT> <EXP> | <INT> <FRAC> <EXP>
+
+/* JSON ARRAY */
+
+
+<JARRAY>   ::= [  <STUFF> ]
+<STUFF>  ::= <TEXT> | <NUMBER> | | , | <STUFF> <STUFF> | <JARRAY>
