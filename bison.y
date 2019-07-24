@@ -1,5 +1,6 @@
 
 %{
+#include <string.h>
 #include <stdio.h>
 extern int yylex();
 extern int yyparse();
@@ -33,7 +34,7 @@ fields: pair
 	| fields ',' pair	
 ;
 
-pair:   STRING ':' STRING   	{indent(stack_count);printf("%s: %s",$1,$3);}
+pair:   STRING ':' STRING   	{if(!strcmp("\"text\"",$1)){if(strlen($3)>140){}}indent(stack_count);printf("%s: %s",$1,$3);}
     	| STRING ':' NUM 	{indent(stack_count);printf("%s: %s",$1,$3);}
 	| STRING ':' array	{printf("\n");indent(stack_count);printf("]");}
 	| STRING ':' empty_array {indent(stack_count);printf("]");}
@@ -67,6 +68,8 @@ void indent(int i){
 		printf("\t");
 	}
 }
+
+
 /*
 void checker(char *string, char *text, int* checker){
 	if(strcmp(string,"text") && strlen(string) <= 141)

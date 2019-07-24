@@ -30,6 +30,5 @@ WS [ \t]*
 {WS}		/* ignore whitespace  */;
 {JSTRING}	{yylval.val = strdup(yytext);last_string = strdup(yytext);return STRING;}
 {JNUM}		{yylval.val = strdup(yytext);return NUM;}
-.		/*printf("error %s \n",yytext)*/;
 
 %%

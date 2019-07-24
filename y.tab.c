@@ -68,6 +68,7 @@
 /* First part of user prologue.  */
 #line 2 "bison.y" /* yacc.c:337  */
 
+#include <string.h>
 #include <stdio.h>
 extern int yylex();
 extern int yyparse();
@@ -81,7 +82,7 @@ extern unsigned int start;
 extern unsigned int stack_count;
 int check[4] = {0,0,0,0};
 
-#line 85 "y.tab.c" /* yacc.c:337  */
+#line 86 "y.tab.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -132,10 +133,10 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 17 "bison.y" /* yacc.c:352  */
+#line 18 "bison.y" /* yacc.c:352  */
  char* val;
 
-#line 139 "y.tab.c" /* yacc.c:352  */
+#line 140 "y.tab.c" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -438,8 +439,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    25,    25,    28,    29,    32,    33,    36,    37,    38,
-      39,    40,    43,    46,    49,    50,    53,    54,    55,    56
+       0,    26,    26,    29,    30,    33,    34,    37,    38,    39,
+      40,    41,    44,    47,    50,    51,    54,    55,    56,    57
 };
 #endif
 
@@ -1228,61 +1229,61 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 25 "bison.y" /* yacc.c:1652  */
+#line 26 "bison.y" /* yacc.c:1652  */
     {printf("\n");}
-#line 1234 "y.tab.c" /* yacc.c:1652  */
+#line 1235 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 3:
-#line 28 "bison.y" /* yacc.c:1652  */
+#line 29 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("}");}
-#line 1240 "y.tab.c" /* yacc.c:1652  */
+#line 1241 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 4:
-#line 29 "bison.y" /* yacc.c:1652  */
+#line 30 "bison.y" /* yacc.c:1652  */
     {printf("\n");indent(stack_count);printf("}");}
-#line 1246 "y.tab.c" /* yacc.c:1652  */
+#line 1247 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 36 "bison.y" /* yacc.c:1652  */
-    {indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));}
-#line 1252 "y.tab.c" /* yacc.c:1652  */
+#line 37 "bison.y" /* yacc.c:1652  */
+    {if(!strcmp("\"text\"",(yyvsp[-2].val))){if(strlen((yyvsp[0].val))>14){printf("false");}}indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));}
+#line 1253 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 37 "bison.y" /* yacc.c:1652  */
+#line 38 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));}
-#line 1258 "y.tab.c" /* yacc.c:1652  */
+#line 1259 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 38 "bison.y" /* yacc.c:1652  */
+#line 39 "bison.y" /* yacc.c:1652  */
     {printf("\n");indent(stack_count);printf("]");}
-#line 1264 "y.tab.c" /* yacc.c:1652  */
+#line 1265 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 39 "bison.y" /* yacc.c:1652  */
+#line 40 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("]");}
-#line 1270 "y.tab.c" /* yacc.c:1652  */
+#line 1271 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 53 "bison.y" /* yacc.c:1652  */
+#line 54 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("%s",(yyvsp[0].val));}
-#line 1276 "y.tab.c" /* yacc.c:1652  */
+#line 1277 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 17:
-#line 54 "bison.y" /* yacc.c:1652  */
+#line 55 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("%s",(yyvsp[0].val));}
-#line 1282 "y.tab.c" /* yacc.c:1652  */
+#line 1283 "y.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1286 "y.tab.c" /* yacc.c:1652  */
+#line 1287 "y.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1513,7 +1514,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 58 "bison.y" /* yacc.c:1918  */
+#line 59 "bison.y" /* yacc.c:1918  */
 
 
 void yyerror(char *s) {
@@ -1526,6 +1527,8 @@ void indent(int i){
 		printf("\t");
 	}
 }
+
+
 /*
 void checker(char *string, char *text, int* checker){
 	if(strcmp(string,"text") && strlen(string) <= 141)
