@@ -7,6 +7,7 @@ char * last_string = NULL;
 unsigned short arr_block=0;
 unsigned short start=0;
 void indent(int);
+void inv_tokens();
 %}
 
 %option noyywrap
@@ -30,5 +31,11 @@ WS [ \t]*
 {WS}		/* ignore whitespace  */;
 {JSTRING}	{yylval.val = strdup(yytext);last_string = strdup(yytext);return STRING;}
 {JNUM}		{yylval.val = strdup(yytext);return NUM;}
+.		{inv_tokens();}
 
 %%
+
+void inv_tokens(){
+	fprintf(stderr,"Invalid token : %s \n at line : %d \n", yytext, line_num);
+	exit(0);
+}

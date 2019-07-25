@@ -1248,7 +1248,7 @@ yyreduce:
 
   case 7:
 #line 37 "bison.y" /* yacc.c:1652  */
-    {if(!strcmp("\"text\"",(yyvsp[-2].val))){if(strlen((yyvsp[0].val))>14){printf("false");}}indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));}
+    {if(!strcmp("\"text\"",(yyvsp[-2].val))){if(strlen((yyvsp[0].val))>140){}}indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));}
 #line 1253 "y.tab.c" /* yacc.c:1652  */
     break;
 
@@ -1518,7 +1518,7 @@ yyreturn:
 
 
 void yyerror(char *s) {
-    fprintf(stderr, "%s\n", s);
+    fprintf(stderr, "Syntax error at line : %d\n", line_num);
 }									
 
 void indent(int i){

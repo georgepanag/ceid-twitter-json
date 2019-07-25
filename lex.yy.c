@@ -354,8 +354,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 11
-#define YY_END_OF_BUFFER 12
+#define YY_NUM_RULES 12
+#define YY_END_OF_BUFFER 13
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -365,7 +365,7 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[29] =
     {   0,
-        8,    8,   12,   11,    8,    7,   11,    4,   11,   10,
+        8,    8,   13,   11,    8,    7,   11,    4,   11,   10,
         3,    5,    6,    1,    2,    8,    0,    9,    0,   10,
        10,   10,    0,    9,   10,    0,   10,    0
     } ;
@@ -468,8 +468,9 @@ char * last_string = NULL;
 unsigned short arr_block=0;
 unsigned short start=0;
 void indent(int);
-#line 472 "lex.yy.c"
+void inv_tokens();
 #line 473 "lex.yy.c"
+#line 474 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -686,10 +687,10 @@ YY_DECL
 		}
 
 	{
-#line 21 "flex.l"
+#line 22 "flex.l"
 
 
-#line 693 "lex.yy.c"
+#line 694 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -748,62 +749,67 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 23 "flex.l"
+#line 24 "flex.l"
 {if(start==0){printf("\{\n");start =1;}if(arr_block == 0 && last_string != NULL){indent(stack_count);printf("%s: \{\n",last_string);}if(arr_block == 1){indent(stack_count);printf("{\n");arr_block =0;}stack_count++;return '{';}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 24 "flex.l"
+#line 25 "flex.l"
 {if(arr_block == 0) arr_block == 1 ;stack_count--;return '}';}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 25 "flex.l"
+#line 26 "flex.l"
 return ':'; 
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 26 "flex.l"
+#line 27 "flex.l"
 {printf(",\n");return ',';}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 27 "flex.l"
+#line 28 "flex.l"
 {if(arr_block == 0 && last_string != NULL){indent(stack_count);printf("%s: [\n",last_string);};arr_block = 1;stack_count++;return '[';}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 28 "flex.l"
+#line 29 "flex.l"
 {arr_block = 0;stack_count--;return ']';}
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 29 "flex.l"
+#line 30 "flex.l"
 {line_num++;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 30 "flex.l"
+#line 31 "flex.l"
 /* ignore whitespace  */;
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 31 "flex.l"
+#line 32 "flex.l"
 {yylval.val = strdup(yytext);last_string = strdup(yytext);return STRING;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 32 "flex.l"
+#line 33 "flex.l"
 {yylval.val = strdup(yytext);return NUM;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 34 "flex.l"
+{inv_tokens();}
+	YY_BREAK
+case 12:
+YY_RULE_SETUP
+#line 36 "flex.l"
 ECHO;
 	YY_BREAK
-#line 807 "lex.yy.c"
+#line 813 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1808,6 +1814,11 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 34 "flex.l"
+#line 36 "flex.l"
 
+
+void inv_tokens(){
+	fprintf(stderr,"Invalid token : %s \n at line : %d \n", yytext, line_num);
+	exit(0);
+}
 

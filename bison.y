@@ -59,7 +59,7 @@ arr_memb: NUM 			{indent(stack_count);printf("%s",$1);}
 %%
 
 void yyerror(char *s) {
-    fprintf(stderr, "%s\n", s);
+    fprintf(stderr, "Syntax error at line : %d\n", line_num);
 }									
 
 void indent(int i){
