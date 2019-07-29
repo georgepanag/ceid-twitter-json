@@ -24,6 +24,8 @@ YEAR {DIGIT}{DIGIT}{DIGIT}{DIGIT}
 TIMESTAMP {HOUR}:{MIN_OR_SEC}:{MIN_OR_SEC}
 HOUR [0-23]
 MIN_OR_SEC [0-60]
+COMPLETE_TIMESTAMP {DAY_NAME}{WS}{MONTH}{WS}{DAY}{WS}{TIMESTAMP}{WS}{YEAR}
+ID_STRING [^-]+?{DIGIT}+
 
 
 %%
@@ -38,5 +40,7 @@ MIN_OR_SEC [0-60]
 {WS}		/* ignore whitespace  */;
 {JSTRING}	{yylval.val = strdup(yytext);last_string = strdup(yytext);return STRING;}
 {JNUM}		{yylval.val = strdup(yytext);return NUM;}
+{COMPLETE_TIMESTAMP} {yylval.val = strdup(yytext);return COMPLETE_TIMESTAMP;}
+ID_STRING {yylval.val = strdup(yytext);return ID_STRING;}
 
 %%
