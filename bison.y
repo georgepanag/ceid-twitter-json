@@ -39,6 +39,8 @@ pair:   STRING ':' STRING   	{if(!strcmp("\"text\"",$1)){if(strlen($3)>140){}}in
 	| STRING ':' array	{printf("\n");indent(stack_count);printf("]");}
 	| STRING ':' empty_array {indent(stack_count);printf("]");}
 	| STRING ':' object
+	| STRING ':' COMPLETE_TIMESTAMP 
+	| STRING ':' ID_STRING 
 ;
 
 array: '[' arr_fields ']'	
