@@ -26,7 +26,7 @@ COLON ":"
 HOUR [0-23]
 MIN_OR_SEC [0-60]
 COMPLETE_TIMESTAMP {DAY_NAME}{WS}{MONTH}{WS}{DAY}{WS}{TIMESTAMP}{WS}{YEAR}
-ID_STRING [^-]+?{DIGIT}+
+ID_STRING [^-]+?{DIGIT}+ 
 
 
 %%
@@ -42,6 +42,18 @@ ID_STRING [^-]+?{DIGIT}+
 {JSTRING}	{yylval.val = strdup(yytext);last_string = strdup(yytext);return STRING;}
 {JNUM}		{yylval.val = strdup(yytext);return NUM;}
 {COMPLETE_TIMESTAMP} {yylval.val = strdup(yytext);return COMPLETE_TIMESTAMP;}
-ID_STRING {yylval.val = strdup(yytext);return ID_STRING;}
+ID_STRING {
+#define ID_LEN 5
+char *orderedIds;
+int i;
+int j=0;
+j++
+int variableNumberOfElements = 100; /* Hard coded here */
+char **yytext;
+          yytext = malloc(variableNumberOfElements * sizeof(char*));
+          for (int i = 0; i < variableNumberOfElements; i++)
+          {yytext[i] = malloc((ID_LEN+1) * sizeof(char));}
+          for (i=0; i<j; i++)
+          if strcmp(yytext[i], yytext[i+1])=0 REJECT;
 
 %%
