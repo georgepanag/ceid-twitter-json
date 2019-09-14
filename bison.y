@@ -44,7 +44,13 @@ pair:   STRING ':' STRING   	{indent(stack_count);printf("%s: %s",$1,$3);text_ch
     	| STRING ':' NUM 	{indent(stack_count);printf("%s: %s",$1,$3);user_fields_checker($1,user_check);}
 	| STRING ':' array	{printf("\n");indent(stack_count);printf("]");}
 	| STRING ':' empty_array {indent(stack_count);printf("]");}
+<<<<<<< HEAD
 	| STRING ':' object	{user_checker($1,user_check,check);}	
+=======
+	| STRING ':' object
+	| STRING ':' COMPLETE_TIMESTAMP 
+	| STRING ':' ID_STRING 
+>>>>>>> a5478b3e73e488218e19e420a6fe7155d1d1a43c
 ;
 
 array: '[' arr_fields ']'		
