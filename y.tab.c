@@ -77,6 +77,7 @@ extern FILE *yyout;
 void yyerror(char *);
 void indent(int i);
 void text_checker(const char*,const char*, int*);
+void id_str_checker(const char*, int*);
 void user_checker(const char*,int*, int*);
 void user_fields_checker(const char*, int*);
 #define MAX_TEXT 141
@@ -87,7 +88,7 @@ int user_check[4]= {0,0,0,0};
 extern unsigned int start;
 extern unsigned int stack_count;
 
-#line 91 "y.tab.c" /* yacc.c:337  */
+#line 92 "y.tab.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -138,10 +139,10 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 23 "bison.y" /* yacc.c:352  */
+#line 24 "bison.y" /* yacc.c:352  */
  char* val;
 
-#line 145 "y.tab.c" /* yacc.c:352  */
+#line 146 "y.tab.c" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -444,8 +445,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    31,    31,    35,    36,    39,    40,    43,    44,    45,
-      46,    47,    50,    53,    56,    57,    60,    61,    62,    63
+       0,    32,    32,    36,    37,    40,    41,    44,    45,    46,
+      47,    48,    51,    54,    57,    58,    61,    62,    63,    64
 };
 #endif
 
@@ -1234,67 +1235,67 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 31 "bison.y" /* yacc.c:1652  */
+#line 32 "bison.y" /* yacc.c:1652  */
     {printf("\n");}
-#line 1240 "y.tab.c" /* yacc.c:1652  */
+#line 1241 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 3:
-#line 35 "bison.y" /* yacc.c:1652  */
+#line 36 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("}");}
-#line 1246 "y.tab.c" /* yacc.c:1652  */
+#line 1247 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 4:
-#line 36 "bison.y" /* yacc.c:1652  */
+#line 37 "bison.y" /* yacc.c:1652  */
     {printf("\n");indent(stack_count);printf("}");}
-#line 1252 "y.tab.c" /* yacc.c:1652  */
+#line 1253 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 43 "bison.y" /* yacc.c:1652  */
-    {indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));text_checker((yyvsp[-2].val),(yyvsp[0].val),check);user_fields_checker((yyvsp[-2].val),user_check);}
-#line 1258 "y.tab.c" /* yacc.c:1652  */
+#line 44 "bison.y" /* yacc.c:1652  */
+    {indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));text_checker((yyvsp[-2].val),(yyvsp[0].val),check);user_fields_checker((yyvsp[-2].val),user_check);id_str_checker((yyvsp[-2].val),check);}
+#line 1259 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 44 "bison.y" /* yacc.c:1652  */
+#line 45 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));user_fields_checker((yyvsp[-2].val),user_check);}
-#line 1264 "y.tab.c" /* yacc.c:1652  */
+#line 1265 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 45 "bison.y" /* yacc.c:1652  */
+#line 46 "bison.y" /* yacc.c:1652  */
     {printf("\n");indent(stack_count);printf("]");}
-#line 1270 "y.tab.c" /* yacc.c:1652  */
+#line 1271 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 46 "bison.y" /* yacc.c:1652  */
+#line 47 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("]");}
-#line 1276 "y.tab.c" /* yacc.c:1652  */
+#line 1277 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 47 "bison.y" /* yacc.c:1652  */
+#line 48 "bison.y" /* yacc.c:1652  */
     {user_checker((yyvsp[-2].val),user_check,check);}
-#line 1282 "y.tab.c" /* yacc.c:1652  */
+#line 1283 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 60 "bison.y" /* yacc.c:1652  */
+#line 61 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("%s",(yyvsp[0].val));}
-#line 1288 "y.tab.c" /* yacc.c:1652  */
+#line 1289 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 17:
-#line 61 "bison.y" /* yacc.c:1652  */
+#line 62 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("%s",(yyvsp[0].val));}
-#line 1294 "y.tab.c" /* yacc.c:1652  */
+#line 1295 "y.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1298 "y.tab.c" /* yacc.c:1652  */
+#line 1299 "y.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1525,7 +1526,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 65 "bison.y" /* yacc.c:1918  */
+#line 66 "bison.y" /* yacc.c:1918  */
 
 
 void yyerror(char *s) {
@@ -1548,10 +1549,22 @@ void text_checker(const char *string,const char* text, int* checker){
 
 			}
 			else
-				fprintf(stderr,"Element text must only appear one time");						
+				yyerror("Element text must only appear one time");						
 		}
 	}
 }
+
+void id_str_checker(const char *string, int* checker){
+	if(!strcmp(string,"\"id_str\"")){
+			if(*checker==0){
+				checker[1]=1;
+
+			}
+			else
+				yyerror("Element id_str must only appear one time");						
+	}
+}
+
 
 void user_fields_checker(const char *string, int* checker){
 
@@ -1570,7 +1583,7 @@ void user_fields_checker(const char *string, int* checker){
 void user_checker(const char* string , int* checker, int* Checker){
 	if(!strcmp(string,"\"user\"")){
 		if(*(checker) == 1 && *(checker + 1) == 1 && *(checker+2) ==1 && *(checker+3) ==1)
-			*(Checker+1) = 1;
+			*(Checker+2) = 1;
 	}
 	else 
 		for(int i=0;i<4;i++){

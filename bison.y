@@ -9,6 +9,7 @@ extern FILE *yyout;
 void yyerror(char *);
 void indent(int i);
 void text_checker(const char*,const char*, int*);
+void id_str_checker(const char*, int*);
 void user_checker(const char*,int*, int*);
 void user_fields_checker(const char*, int*);
 #define MAX_TEXT 141
@@ -40,7 +41,7 @@ fields: pair
 	| fields ',' pair	
 ;
 
-pair:   STRING ':' STRING   	{indent(stack_count);printf("%s: %s",$1,$3);text_checker($1,$3,check);user_fields_checker($1,user_check);}
+pair:   STRING ':' STRING   	{indent(stack_count);printf("%s: %s",$1,$3);text_checker($1,$3,check);user_fields_checker($1,user_check);id_str_checker($1,check);}
     	| STRING ':' NUM 	{indent(stack_count);printf("%s: %s",$1,$3);user_fields_checker($1,user_check);}
 	| STRING ':' array	{printf("\n");indent(stack_count);printf("]");}
 	| STRING ':' empty_array {indent(stack_count);printf("]");}
@@ -84,10 +85,22 @@ void text_checker(const char *string,const char* text, int* checker){
 
 			}
 			else
-				fprintf(stderr,"Element text must only appear one time");						
+				yyerror("Element text must only appear one time");						
 		}
 	}
 }
+
+void id_str_checker(const char *string, int* checker){
+	if(!strcmp(string,"\"id_str\"")){
+			if(*checker==0){
+				checker[1]=1;
+
+			}
+			else
+				yyerror("Element id_str must only appear one time");						
+	}
+}
+
 
 void user_fields_checker(const char *string, int* checker){
 
@@ -106,7 +119,7 @@ void user_fields_checker(const char *string, int* checker){
 void user_checker(const char* string , int* checker, int* Checker){
 	if(!strcmp(string,"\"user\"")){
 		if(*(checker) == 1 && *(checker + 1) == 1 && *(checker+2) ==1 && *(checker+3) ==1)
-			*(Checker+1) = 1;
+			*(Checker+2) = 1;
 	}
 	else 
 		for(int i=0;i<4;i++){
