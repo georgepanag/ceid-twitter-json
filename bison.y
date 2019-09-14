@@ -44,13 +44,7 @@ pair:   STRING ':' STRING   	{indent(stack_count);printf("%s: %s",$1,$3);text_ch
     	| STRING ':' NUM 	{indent(stack_count);printf("%s: %s",$1,$3);user_fields_checker($1,user_check);}
 	| STRING ':' array	{printf("\n");indent(stack_count);printf("]");}
 	| STRING ':' empty_array {indent(stack_count);printf("]");}
-<<<<<<< HEAD
 	| STRING ':' object	{user_checker($1,user_check,check);}	
-=======
-	| STRING ':' object
-	| STRING ':' COMPLETE_TIMESTAMP 
-	| STRING ':' ID_STRING 
->>>>>>> a5478b3e73e488218e19e420a6fe7155d1d1a43c
 ;
 
 array: '[' arr_fields ']'		
@@ -86,7 +80,7 @@ void text_checker(const char *string,const char* text, int* checker){
 	if(!strcmp(string,"\"text\"")){
 		if(strlen(text) < 140 && stack_count <= 1){	
 			if(*checker==0){
-				check[0]=1;
+				checker[0]=1;
 
 			}
 			else
@@ -98,7 +92,6 @@ void text_checker(const char *string,const char* text, int* checker){
 void user_fields_checker(const char *string, int* checker){
 
 	if(!strcmp(string, "\"id\"")){
-		printf("dfd");
 		*checker = 1;
 	}
 	if(!strcmp(string, "\"name\""))
@@ -111,17 +104,12 @@ void user_fields_checker(const char *string, int* checker){
 }
 
 void user_checker(const char* string , int* checker, int* Checker){
-	int check_sum = 0;
-	int i;
 	if(!strcmp(string,"\"user\"")){
-		for(i = 0; i++; i<4){
-		check_sum += *(checker + i);
-		}
-		if(check_sum == 4)
-			*(Checker + 1) = 1;
+		if(*(checker) == 1 && *(checker + 1) == 1 && *(checker+2) ==1 && *(checker+3) ==1)
+			*(Checker+1) = 1;
 	}
 	else 
-		for(i=0;i++;i<4){
+		for(int i=0;i<4;i++){
 			*(checker + i) = 0;
 		}
 }
@@ -134,10 +122,14 @@ int main ( int argc, char **argv  )
         yyin = fopen( argv[0], "r" );
 	else
         yyin = stdin;
-	printf("%d",check[0]);
+	printf("user : %d\n", check[1]);
+	for(int i = 0;i<4;i++)
+		printf("%d\n",*(user_check + i));
 	yyparse ();
-	
-	printf("%d",(check[0]));
+	for(int i = 0;i<4;i++)
+		printf("%d\n",*(user_check + i));
+	printf("user : %d\n", check[1]);
+
 	
 	return 0;
 }   
