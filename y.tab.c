@@ -70,6 +70,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 extern int yylex();
 extern int yyparse();
 extern FILE *yyin;
@@ -88,7 +89,7 @@ int user_check[4]= {0,0,0,0};
 extern unsigned int start;
 extern unsigned int stack_count;
 
-#line 92 "y.tab.c" /* yacc.c:337  */
+#line 93 "y.tab.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -139,10 +140,10 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 24 "bison.y" /* yacc.c:352  */
+#line 25 "bison.y" /* yacc.c:352  */
  char* val;
 
-#line 146 "y.tab.c" /* yacc.c:352  */
+#line 147 "y.tab.c" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -445,8 +446,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    32,    32,    36,    37,    40,    41,    44,    45,    46,
-      47,    48,    51,    54,    57,    58,    61,    62,    63,    64
+       0,    33,    33,    37,    38,    41,    42,    45,    46,    47,
+      48,    49,    52,    55,    58,    59,    62,    63,    64,    65
 };
 #endif
 
@@ -1235,67 +1236,67 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 32 "bison.y" /* yacc.c:1652  */
+#line 33 "bison.y" /* yacc.c:1652  */
     {printf("\n");}
-#line 1241 "y.tab.c" /* yacc.c:1652  */
+#line 1242 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 3:
-#line 36 "bison.y" /* yacc.c:1652  */
+#line 37 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("}");}
-#line 1247 "y.tab.c" /* yacc.c:1652  */
+#line 1248 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 4:
-#line 37 "bison.y" /* yacc.c:1652  */
+#line 38 "bison.y" /* yacc.c:1652  */
     {printf("\n");indent(stack_count);printf("}");}
-#line 1253 "y.tab.c" /* yacc.c:1652  */
+#line 1254 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 44 "bison.y" /* yacc.c:1652  */
+#line 45 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));text_checker((yyvsp[-2].val),(yyvsp[0].val),check);user_fields_checker((yyvsp[-2].val),user_check);id_str_checker((yyvsp[-2].val),check);}
-#line 1259 "y.tab.c" /* yacc.c:1652  */
+#line 1260 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 45 "bison.y" /* yacc.c:1652  */
+#line 46 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));user_fields_checker((yyvsp[-2].val),user_check);}
-#line 1265 "y.tab.c" /* yacc.c:1652  */
+#line 1266 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 46 "bison.y" /* yacc.c:1652  */
+#line 47 "bison.y" /* yacc.c:1652  */
     {printf("\n");indent(stack_count);printf("]");}
-#line 1271 "y.tab.c" /* yacc.c:1652  */
+#line 1272 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 47 "bison.y" /* yacc.c:1652  */
+#line 48 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("]");}
-#line 1277 "y.tab.c" /* yacc.c:1652  */
+#line 1278 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 48 "bison.y" /* yacc.c:1652  */
+#line 49 "bison.y" /* yacc.c:1652  */
     {user_checker((yyvsp[-2].val),user_check,check);}
-#line 1283 "y.tab.c" /* yacc.c:1652  */
+#line 1284 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 61 "bison.y" /* yacc.c:1652  */
+#line 62 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("%s",(yyvsp[0].val));}
-#line 1289 "y.tab.c" /* yacc.c:1652  */
+#line 1290 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 17:
-#line 62 "bison.y" /* yacc.c:1652  */
+#line 63 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("%s",(yyvsp[0].val));}
-#line 1295 "y.tab.c" /* yacc.c:1652  */
+#line 1296 "y.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1299 "y.tab.c" /* yacc.c:1652  */
+#line 1300 "y.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1526,11 +1527,12 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 66 "bison.y" /* yacc.c:1918  */
+#line 67 "bison.y" /* yacc.c:1918  */
 
 
 void yyerror(char *s) {
-    fprintf(stderr, "Syntax error at line : %d\n", line_num);
+   	fprintf(stderr, "Syntax error at line : %d\n", line_num);
+	exit(1);
 }									
 
 void indent(int i){
@@ -1548,20 +1550,24 @@ void text_checker(const char *string,const char* text, int* checker){
 				checker[0]=1;
 
 			}
-			else
-				yyerror("Element text must only appear one time");						
+			else if (*checker == 1){
+				fprintf(stderr, "Element text must appear only once(line : %d)",line_num);
+				exit(1);
+			}
 		}
 	}
 }
 
 void id_str_checker(const char *string, int* checker){
 	if(!strcmp(string,"\"id_str\"")){
-			if(*checker==0){
-				checker[1]=1;
-
-			}
-			else
-				yyerror("Element id_str must only appear one time");						
+		if(*(checker+1)==0){
+			checker[1]=1;
+		}
+		else if( *(checker +1) ==1){
+			fprintf(stderr,"Element id_str must only appear one time (line : %d)",line_num);	
+			exit(1);
+			
+		}
 	}
 }
 

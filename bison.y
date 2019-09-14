@@ -2,6 +2,7 @@
 %{
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 extern int yylex();
 extern int yyparse();
 extern FILE *yyin;
@@ -66,7 +67,8 @@ arr_memb: NUM 			{indent(stack_count);printf("%s",$1);}
 %%
 
 void yyerror(char *s) {
-    fprintf(stderr, "Syntax error at line : %d\n", line_num);
+   	fprintf(stderr, "Syntax error at line : %d\n", line_num);
+	exit(1);
 }									
 
 void indent(int i){
@@ -84,20 +86,24 @@ void text_checker(const char *string,const char* text, int* checker){
 				checker[0]=1;
 
 			}
-			else
-				yyerror("Element text must only appear one time");						
+			else if (*checker == 1){
+				fprintf(stderr, "Element text must appear only once(line : %d)",line_num);
+				exit(1);
+			}
 		}
 	}
 }
 
 void id_str_checker(const char *string, int* checker){
 	if(!strcmp(string,"\"id_str\"")){
-			if(*checker==0){
-				checker[1]=1;
-
-			}
-			else
-				yyerror("Element id_str must only appear one time");						
+		if(*(checker+1)==0){
+			checker[1]=1;
+		}
+		else if( *(checker +1) ==1){
+			fprintf(stderr,"Element id_str must only appear one time (line : %d)",line_num);	
+			exit(1);
+			
+		}
 	}
 }
 
