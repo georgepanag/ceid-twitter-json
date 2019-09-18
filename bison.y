@@ -18,6 +18,9 @@ int check[4] = {0,0,0,0};
 %union { char* val;}
 %token <val> STRING 
 %token <val> NUM
+
+%token <val> DAYN
+
 %%
 
 
@@ -39,8 +42,7 @@ pair:   STRING ':' STRING   	{if(!strcmp("\"text\"",$1)){if(strlen($3)>140){}}in
 	| STRING ':' array	{printf("\n");indent(stack_count);printf("]");}
 	| STRING ':' empty_array {indent(stack_count);printf("]");}
 	| STRING ':' object
-	| STRING ':' COMPLETE_TIMESTAMP 
-	| STRING ':' ID_STRING 
+	| STRING ':' DAYN	{printf("%s: %s",$1,$3);}	
 ;
 
 array: '[' arr_fields ']'	
@@ -58,6 +60,9 @@ arr_memb: NUM 			{indent(stack_count);printf("%s",$1);}
 	| array
 	| object
 ;
+
+
+
 %%
 
 void yyerror(char *s) {
