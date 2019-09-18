@@ -1,18 +1,6 @@
 {
-"retweeted_status" : {
-"text" : "fddf",
-"sthni" : 4334,
-"user" : {
-"screen_name" : "dfdfdfd"
-}
-},
-"tweet" : {
-"text" : "fddf",
-"sthni" : 4334,
-"user" : {
-"screen_name" : "dfdfdfd"
-}
-},
+
+
 "created_at": "Thu Apr 06 15:24:15 +0000 2017",
 "id_str": "850006244545453634",
 "text": "1\/ Today we\u2019re sharing our vision for the futureof the Twitter API platform!\nhttps:\/\/t.co\/XweGngmxlP",

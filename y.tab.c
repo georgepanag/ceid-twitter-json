@@ -1690,13 +1690,8 @@ int main ( int argc, char **argv  )
         yyin = fopen( argv[0], "r" );
 	else
         yyin = stdin;
-	printf("user : %d\n", check[1]);
-	for(int i = 0;i<3;i++)
-		printf("%d%d\n",*retweet_,*(ret_status_check_ + i));
-	yyparse ();
-	for(int i = 0;i<3;i++)
-		printf("%d   %d\n",*retweet_,*(ret_status_check_ + i));
-	printf("\n\n\n");
+		yyparse ();
+		printf("\n\n\n");
 	if(!check[0]){
 		printf("JSON file missing text filed\n");
 		return 0;
@@ -1714,7 +1709,7 @@ int main ( int argc, char **argv  )
 		return 0;
 }
 	printf("JSON parsed succefuly\n");
-	if(retweet[0] && retweet_[0]);
+	if(retweet[0] && retweet_[0])
 	printf("Retweet detected\n");
 	return 0;
 
