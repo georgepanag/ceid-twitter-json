@@ -79,17 +79,23 @@ void yyerror(char *);
 void indent(int i);
 void text_checker(const char*,const char*, int*);
 void id_str_checker(const char*, int*);
+void created_at_checker(const char*, int*);
 void user_checker(const char*,int*, int*);
 void user_fields_checker(const char*, int*);
+void ret_screen_name_checker(const char*, int*);
+void ret_useratext_checker(const char*, int*);
+void ret_status_checker(const char*, int*,int*);
 #define MAX_TEXT 141
 extern int line_num;
 int check[4] = {0,0,0,0};
 int user_check[4]= {0,0,0,0};
+int retweet[2] = {0,0};
+int ret_status_check[3]= {0,0,0};
 
 extern unsigned int start;
 extern unsigned int stack_count;
 
-#line 93 "y.tab.c" /* yacc.c:337  */
+#line 99 "y.tab.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -140,10 +146,10 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 25 "bison.y" /* yacc.c:352  */
+#line 31 "bison.y" /* yacc.c:352  */
  char* val;
 
-#line 147 "y.tab.c" /* yacc.c:352  */
+#line 153 "y.tab.c" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -446,8 +452,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    33,    33,    37,    38,    41,    42,    45,    46,    47,
-      48,    49,    52,    55,    58,    59,    62,    63,    64,    65
+       0,    39,    39,    43,    44,    47,    48,    51,    52,    53,
+      54,    55,    58,    61,    64,    65,    68,    69,    70,    71
 };
 #endif
 
@@ -1236,67 +1242,67 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 33 "bison.y" /* yacc.c:1652  */
+#line 39 "bison.y" /* yacc.c:1652  */
     {printf("\n");}
-#line 1242 "y.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 3:
-#line 37 "bison.y" /* yacc.c:1652  */
-    {indent(stack_count);printf("}");}
 #line 1248 "y.tab.c" /* yacc.c:1652  */
     break;
 
-  case 4:
-#line 38 "bison.y" /* yacc.c:1652  */
-    {printf("\n");indent(stack_count);printf("}");}
+  case 3:
+#line 43 "bison.y" /* yacc.c:1652  */
+    {indent(stack_count);printf("}");}
 #line 1254 "y.tab.c" /* yacc.c:1652  */
     break;
 
-  case 7:
-#line 45 "bison.y" /* yacc.c:1652  */
-    {indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));text_checker((yyvsp[-2].val),(yyvsp[0].val),check);user_fields_checker((yyvsp[-2].val),user_check);id_str_checker((yyvsp[-2].val),check);}
+  case 4:
+#line 44 "bison.y" /* yacc.c:1652  */
+    {printf("\n");indent(stack_count);printf("}");}
 #line 1260 "y.tab.c" /* yacc.c:1652  */
     break;
 
-  case 8:
-#line 46 "bison.y" /* yacc.c:1652  */
-    {indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));user_fields_checker((yyvsp[-2].val),user_check);}
+  case 7:
+#line 51 "bison.y" /* yacc.c:1652  */
+    {indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));text_checker((yyvsp[-2].val),(yyvsp[0].val),check);user_fields_checker((yyvsp[-2].val),user_check);id_str_checker((yyvsp[-2].val),check);created_at_checker((yyvsp[-2].val),check);ret_screen_name_checker((yyvsp[-2].val),ret_status_check);}
 #line 1266 "y.tab.c" /* yacc.c:1652  */
     break;
 
-  case 9:
-#line 47 "bison.y" /* yacc.c:1652  */
-    {printf("\n");indent(stack_count);printf("]");}
+  case 8:
+#line 52 "bison.y" /* yacc.c:1652  */
+    {indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));user_fields_checker((yyvsp[-2].val),user_check);}
 #line 1272 "y.tab.c" /* yacc.c:1652  */
     break;
 
-  case 10:
-#line 48 "bison.y" /* yacc.c:1652  */
-    {indent(stack_count);printf("]");}
+  case 9:
+#line 53 "bison.y" /* yacc.c:1652  */
+    {printf("\n");indent(stack_count);printf("]");}
 #line 1278 "y.tab.c" /* yacc.c:1652  */
     break;
 
-  case 11:
-#line 49 "bison.y" /* yacc.c:1652  */
-    {user_checker((yyvsp[-2].val),user_check,check);}
+  case 10:
+#line 54 "bison.y" /* yacc.c:1652  */
+    {indent(stack_count);printf("]");}
 #line 1284 "y.tab.c" /* yacc.c:1652  */
     break;
 
-  case 16:
-#line 62 "bison.y" /* yacc.c:1652  */
-    {indent(stack_count);printf("%s",(yyvsp[0].val));}
+  case 11:
+#line 55 "bison.y" /* yacc.c:1652  */
+    {user_checker((yyvsp[-2].val),user_check,check);ret_useratext_checker((yyvsp[-2].val),ret_status_check);ret_status_checker((yyvsp[-2].val),ret_status_check,retweet);}
 #line 1290 "y.tab.c" /* yacc.c:1652  */
     break;
 
-  case 17:
-#line 63 "bison.y" /* yacc.c:1652  */
+  case 16:
+#line 68 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("%s",(yyvsp[0].val));}
 #line 1296 "y.tab.c" /* yacc.c:1652  */
     break;
 
+  case 17:
+#line 69 "bison.y" /* yacc.c:1652  */
+    {indent(stack_count);printf("%s",(yyvsp[0].val));}
+#line 1302 "y.tab.c" /* yacc.c:1652  */
+    break;
 
-#line 1300 "y.tab.c" /* yacc.c:1652  */
+
+#line 1306 "y.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1527,11 +1533,11 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 67 "bison.y" /* yacc.c:1918  */
+#line 73 "bison.y" /* yacc.c:1918  */
 
 
 void yyerror(char *s) {
-   	fprintf(stderr, "Syntax error at line : %d\n", line_num);
+	fprintf(stderr, "Syntax error at line : %d\n", line_num);
 	exit(1);
 }									
 
@@ -1559,7 +1565,7 @@ void text_checker(const char *string,const char* text, int* checker){
 }
 
 void id_str_checker(const char *string, int* checker){
-	if(!strcmp(string,"\"id_str\"")){
+	if(!strcmp(string,"\"id_str\"")&& stack_count <=1){
 		if(*(checker+1)==0){
 			checker[1]=1;
 		}
@@ -1571,6 +1577,18 @@ void id_str_checker(const char *string, int* checker){
 	}
 }
 
+void created_at_checker(const char *string, int* checker){
+	if(!strcmp(string,"\"created_at\"")&& stack_count <=1){
+		if(*(checker+3)==0){
+			checker[3]=1;
+		}
+		else if( *(checker +3) ==1){
+			fprintf(stderr,"Element created_at must only appear one time (line : %d)",line_num);	
+			exit(1);
+			
+		}
+	}
+}
 
 void user_fields_checker(const char *string, int* checker){
 
@@ -1597,6 +1615,34 @@ void user_checker(const char* string , int* checker, int* Checker){
 		}
 }
 
+void ret_screen_name_checker(const char*string,int *checker){
+	if(!strcmp(string,"\"screen_name\"")){
+		checker[0] = 1;
+}	if(!strcmp(string,"\"text\""))
+		checker[2] = 1;
+}
+
+void ret_useratext_checker(const char * string,int* checker){
+	if(!strcmp(string,"\"user\"")){
+		if(checker[0] == 1)
+			checker[1] = 1;
+	}
+	else{ 
+		checker[0] = 0;
+}
+
+}
+
+void ret_status_checker(const char * string,int *checker,int *Checker){
+	if(!strcmp(string,"\"retweeted_status\"")){
+		if(check[1] && check[2])
+			Checker[0] = 1;
+	}
+		
+
+}
+
+
 
 int main ( int argc, char **argv  ) 
  {
@@ -1606,14 +1652,30 @@ int main ( int argc, char **argv  )
 	else
         yyin = stdin;
 	printf("user : %d\n", check[1]);
-	for(int i = 0;i<4;i++)
-		printf("%d\n",*(user_check + i));
+	for(int i = 0;i<3;i++)
+		printf("%d%d\n",*retweet,*(ret_status_check + i));
 	yyparse ();
-	for(int i = 0;i<4;i++)
-		printf("%d\n",*(user_check + i));
-	printf("user : %d\n", check[1]);
-
-	
+	for(int i = 0;i<3;i++)
+		printf("%d   %d\n",*retweet,*(ret_status_check + i));
+	printf("\n\n\n");
+	if(!check[0]){
+		printf("JSON file missing text filed\n");
+		return 0;
+}
+	if(!check[1]){
+		printf("JSON file missing id_srt filed\n");
+		return 0;
+}
+	if(!check[2]){
+		printf("JSON file missing correct user filed\n");
+		return 0;
+}
+	if(!check[3]){
+		printf("JSON file missing created_at filed\n");
+		return 0;
+}
+	printf("JSON parsed succefuly\n");
 	return 0;
+
 }   
 	

@@ -62,7 +62,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 25 "bison.y" /* yacc.c:1921  */
+#line 31 "bison.y" /* yacc.c:1921  */
  char* val;
 
 #line 69 "y.tab.h" /* yacc.c:1921  */

@@ -11,12 +11,18 @@ void yyerror(char *);
 void indent(int i);
 void text_checker(const char*,const char*, int*);
 void id_str_checker(const char*, int*);
+void created_at_checker(const char*, int*);
 void user_checker(const char*,int*, int*);
 void user_fields_checker(const char*, int*);
+void ret_screen_name_checker(const char*, int*);
+void ret_useratext_checker(const char*, int*);
+void ret_status_checker(const char*, int*,int*);
 #define MAX_TEXT 141
 extern int line_num;
 int check[4] = {0,0,0,0};
 int user_check[4]= {0,0,0,0};
+int retweet[2] = {0,0};
+int ret_status_check[3]= {0,0,0};
 
 extern unsigned int start;
 extern unsigned int stack_count;
@@ -42,11 +48,11 @@ fields: pair
 	| fields ',' pair	
 ;
 
-pair:   STRING ':' STRING   	{indent(stack_count);printf("%s: %s",$1,$3);text_checker($1,$3,check);user_fields_checker($1,user_check);id_str_checker($1,check);}
-    	| STRING ':' NUM 	{indent(stack_count);printf("%s: %s",$1,$3);user_fields_checker($1,user_check);}
+pair:   STRING ':' STRING	{indent(stack_count);printf("%s: %s",$1,$3);text_checker($1,$3,check);user_fields_checker($1,user_check);id_str_checker($1,check);created_at_checker($1,check);ret_screen_name_checker($1,ret_status_check);}
+	| STRING ':' NUM	{indent(stack_count);printf("%s: %s",$1,$3);user_fields_checker($1,user_check);}
 	| STRING ':' array	{printf("\n");indent(stack_count);printf("]");}
 	| STRING ':' empty_array {indent(stack_count);printf("]");}
-	| STRING ':' object	{user_checker($1,user_check,check);}	
+	| STRING ':' object	{user_checker($1,user_check,check);ret_useratext_checker($1,ret_status_check);ret_status_checker($1,ret_status_check,retweet);}	
 ;
 
 array: '[' arr_fields ']'		
@@ -59,7 +65,7 @@ arr_fields: arr_memb
 	| arr_fields ',' arr_memb
 ;
 
-arr_memb: NUM 			{indent(stack_count);printf("%s",$1);}
+arr_memb: NUM			{indent(stack_count);printf("%s",$1);}
 	| STRING		{indent(stack_count);printf("%s",$1);}
 	| array			
 	| object
@@ -67,7 +73,7 @@ arr_memb: NUM 			{indent(stack_count);printf("%s",$1);}
 %%
 
 void yyerror(char *s) {
-   	fprintf(stderr, "Syntax error at line : %d\n", line_num);
+	fprintf(stderr, "Syntax error at line : %d\n", line_num);
 	exit(1);
 }									
 
@@ -95,7 +101,7 @@ void text_checker(const char *string,const char* text, int* checker){
 }
 
 void id_str_checker(const char *string, int* checker){
-	if(!strcmp(string,"\"id_str\"")){
+	if(!strcmp(string,"\"id_str\"")&& stack_count <=1){
 		if(*(checker+1)==0){
 			checker[1]=1;
 		}
@@ -107,6 +113,18 @@ void id_str_checker(const char *string, int* checker){
 	}
 }
 
+void created_at_checker(const char *string, int* checker){
+	if(!strcmp(string,"\"created_at\"")&& stack_count <=1){
+		if(*(checker+3)==0){
+			checker[3]=1;
+		}
+		else if( *(checker +3) ==1){
+			fprintf(stderr,"Element created_at must only appear one time (line : %d)",line_num);	
+			exit(1);
+			
+		}
+	}
+}
 
 void user_fields_checker(const char *string, int* checker){
 
@@ -133,6 +151,34 @@ void user_checker(const char* string , int* checker, int* Checker){
 		}
 }
 
+void ret_screen_name_checker(const char*string,int *checker){
+	if(!strcmp(string,"\"screen_name\"")){
+		checker[0] = 1;
+}	if(!strcmp(string,"\"text\""))
+		checker[2] = 1;
+}
+
+void ret_useratext_checker(const char * string,int* checker){
+	if(!strcmp(string,"\"user\"")){
+		if(checker[0] == 1)
+			checker[1] = 1;
+	}
+	else{ 
+		checker[0] = 0;
+}
+
+}
+
+void ret_status_checker(const char * string,int *checker,int *Checker){
+	if(!strcmp(string,"\"retweeted_status\"")){
+		if(check[1] && check[2])
+			Checker[0] = 1;
+	}
+		
+
+}
+
+
 
 int main ( int argc, char **argv  ) 
  {
@@ -142,14 +188,30 @@ int main ( int argc, char **argv  )
 	else
         yyin = stdin;
 	printf("user : %d\n", check[1]);
-	for(int i = 0;i<4;i++)
-		printf("%d\n",*(user_check + i));
+	for(int i = 0;i<3;i++)
+		printf("%d%d\n",*retweet,*(ret_status_check + i));
 	yyparse ();
-	for(int i = 0;i<4;i++)
-		printf("%d\n",*(user_check + i));
-	printf("user : %d\n", check[1]);
-
-	
+	for(int i = 0;i<3;i++)
+		printf("%d   %d\n",*retweet,*(ret_status_check + i));
+	printf("\n\n\n");
+	if(!check[0]){
+		printf("JSON file missing text filed\n");
+		return 0;
+}
+	if(!check[1]){
+		printf("JSON file missing id_srt filed\n");
+		return 0;
+}
+	if(!check[2]){
+		printf("JSON file missing correct user filed\n");
+		return 0;
+}
+	if(!check[3]){
+		printf("JSON file missing created_at filed\n");
+		return 0;
+}
+	printf("JSON parsed succefuly\n");
 	return 0;
+
 }   
 	
