@@ -1,6 +1,23 @@
 {
 
-
+"tweet": {
+    "text": "RT @author original message",
+    "user": {
+          "screen_name": "Retweeter"
+}
+    },
+    "retweeted_status": {
+      "text": "original message",
+        "user": {         
+            "screen_name": "OriginalTweeter"
+        },
+        "place": {          
+        },
+        "entities": {          
+        },
+        "extended_entities": {          
+        }
+      },     
 "created_at": "Thu Apr 06 15:24:15 +0000 2017",
 "id_str": "850006244545453634",
 "text": "1\/ Today we\u2019re sharing our vision for the futureof the Twitter API platform!\nhttps:\/\/t.co\/XweGngmxlP",

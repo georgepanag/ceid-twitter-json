@@ -26,7 +26,7 @@ HOURS [0-1]{DIGIT}|[2][0-3]
 MINUTS [0-5]{DIGIT}
 YYYY {DIGIT1to9}{DIGIT}{DIGIT}{DIGIT}
 DBQ ["]
-DATE \"{DAY}{WS}{MMM}{WS}{DD}{WS}{HOURS}:{MINUTS}:{MINUTS}{WS}{YYYY}
+DATE \"{DAY}{WS}{MMM}{WS}{DD}{WS}{HOURS}:{MINUTS}:{MINUTS}{WS}{YYYY}\"$
 %%
 
 "{"		{if(start==0){printf("\{\n");start =1;}if(arr_block == 0 && last_string != NULL){indent(stack_count);printf("%s: \{\n",last_string);}if(arr_block == 1){indent(stack_count);printf("{\n");arr_block =0;}stack_count++;return '{';}
