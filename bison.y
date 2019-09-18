@@ -17,12 +17,19 @@ void user_fields_checker(const char*, int*);
 void ret_screen_name_checker(const char*, int*);
 void ret_useratext_checker(const char*, int*);
 void ret_status_checker(const char*, int*,int*);
+void ret_screen_name_checker_(const char*, int*);
+void ret_useratext_checker_(const char*, int*);
+void ret_status_checker_(const char*, int*,int*);
+
 #define MAX_TEXT 141
 extern int line_num;
 int check[4] = {0,0,0,0};
 int user_check[4]= {0,0,0,0};
 int retweet[2] = {0,0};
 int ret_status_check[3]= {0,0,0};
+int retweet_[2] = {0,0};
+int ret_status_check_[3]= {0,0,0};
+
 
 extern unsigned int start;
 extern unsigned int stack_count;
@@ -31,6 +38,7 @@ extern unsigned int stack_count;
 %union { char* val;}
 %token <val> STRING 
 %token <val> NUM
+%token <val> DAYN
 %%
 
 
@@ -48,11 +56,12 @@ fields: pair
 	| fields ',' pair	
 ;
 
-pair:   STRING ':' STRING	{indent(stack_count);printf("%s: %s",$1,$3);text_checker($1,$3,check);user_fields_checker($1,user_check);id_str_checker($1,check);created_at_checker($1,check);ret_screen_name_checker($1,ret_status_check);}
+pair:   STRING ':' STRING	{indent(stack_count);printf("%s: %s",$1,$3);text_checker($1,$3,check);user_fields_checker($1,user_check);id_str_checker($1,check);created_at_checker($1,check);ret_screen_name_checker($1,ret_status_check);ret_screen_name_checker_($1,ret_status_check_);}
 	| STRING ':' NUM	{indent(stack_count);printf("%s: %s",$1,$3);user_fields_checker($1,user_check);}
 	| STRING ':' array	{printf("\n");indent(stack_count);printf("]");}
 	| STRING ':' empty_array {indent(stack_count);printf("]");}
-	| STRING ':' object	{user_checker($1,user_check,check);ret_useratext_checker($1,ret_status_check);ret_status_checker($1,ret_status_check,retweet);}	
+	| STRING ':' object	{user_checker($1,user_check,check);ret_useratext_checker($1,ret_status_check);ret_status_checker($1,ret_status_check,retweet);ret_useratext_checker_($1,ret_status_check_);ret_status_checker_($1,ret_status_check_,retweet_);}	
+
 ;
 
 array: '[' arr_fields ']'		
@@ -171,12 +180,41 @@ void ret_useratext_checker(const char * string,int* checker){
 
 void ret_status_checker(const char * string,int *checker,int *Checker){
 	if(!strcmp(string,"\"retweeted_status\"")){
-		if(check[1] && check[2])
+		if(checker[1] && checker[2]){
 			Checker[0] = 1;
-	}
-		
+}	
 
 }
+}
+
+
+void ret_screen_name_checker_(const char*string,int *checker){
+	if(!strcmp(string,"\"screen_name\"")){
+		checker[0] = 1;
+}	if(!strcmp(string,"\"text\""))
+		checker[2] = 1;
+}
+
+void ret_useratext_checker_(const char * string,int* checker){
+	if(!strcmp(string,"\"user\"")){
+		if(checker[0] == 1)
+			checker[1] = 1;
+	}
+	else{ 
+		checker[0] = 0;
+}
+
+}
+
+void ret_status_checker_(const char * string,int *checker,int *Checker){
+	if(!strcmp(string,"\"retweeted_status\"")){
+		if(checker[1] && checker[2]){
+			Checker[0] = 1;
+}	
+
+}
+}
+
 
 
 
@@ -189,10 +227,10 @@ int main ( int argc, char **argv  )
         yyin = stdin;
 	printf("user : %d\n", check[1]);
 	for(int i = 0;i<3;i++)
-		printf("%d%d\n",*retweet,*(ret_status_check + i));
+		printf("%d%d\n",*retweet_,*(ret_status_check_ + i));
 	yyparse ();
 	for(int i = 0;i<3;i++)
-		printf("%d   %d\n",*retweet,*(ret_status_check + i));
+		printf("%d   %d\n",*retweet_,*(ret_status_check_ + i));
 	printf("\n\n\n");
 	if(!check[0]){
 		printf("JSON file missing text filed\n");
@@ -211,6 +249,8 @@ int main ( int argc, char **argv  )
 		return 0;
 }
 	printf("JSON parsed succefuly\n");
+	if(retweet[0] && retweet_[0]);
+	printf("Retweet detected\n");
 	return 0;
 
 }   

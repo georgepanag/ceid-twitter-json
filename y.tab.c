@@ -85,17 +85,24 @@ void user_fields_checker(const char*, int*);
 void ret_screen_name_checker(const char*, int*);
 void ret_useratext_checker(const char*, int*);
 void ret_status_checker(const char*, int*,int*);
+void ret_screen_name_checker_(const char*, int*);
+void ret_useratext_checker_(const char*, int*);
+void ret_status_checker_(const char*, int*,int*);
+
 #define MAX_TEXT 141
 extern int line_num;
 int check[4] = {0,0,0,0};
 int user_check[4]= {0,0,0,0};
 int retweet[2] = {0,0};
 int ret_status_check[3]= {0,0,0};
+int retweet_[2] = {0,0};
+int ret_status_check_[3]= {0,0,0};
+
 
 extern unsigned int start;
 extern unsigned int stack_count;
 
-#line 99 "y.tab.c" /* yacc.c:337  */
+#line 106 "y.tab.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -134,22 +141,24 @@ extern int yydebug;
   enum yytokentype
   {
     STRING = 258,
-    NUM = 259
+    NUM = 259,
+    DAYN = 260
   };
 #endif
 /* Tokens.  */
 #define STRING 258
 #define NUM 259
+#define DAYN 260
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 31 "bison.y" /* yacc.c:352  */
+#line 38 "bison.y" /* yacc.c:352  */
  char* val;
 
-#line 153 "y.tab.c" /* yacc.c:352  */
+#line 162 "y.tab.c" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -400,7 +409,7 @@ union yyalloc
 #define YYLAST   29
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  11
+#define YYNTOKENS  12
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  9
 /* YYNRULES -- Number of rules.  */
@@ -409,7 +418,7 @@ union yyalloc
 #define YYNSTATES  30
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   259
+#define YYMAXUTOK   260
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex, with out-of-bounds checking.  */
@@ -424,19 +433,15 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     7,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     8,     2,
+       2,     2,     2,     2,     8,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     9,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     9,     2,    10,     2,     2,     2,     2,     2,     2,
+       2,    10,     2,    11,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     5,     2,     6,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     6,     2,     7,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -445,15 +450,20 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     1,     2,     3,     4
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
+       5
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    39,    39,    43,    44,    47,    48,    51,    52,    53,
-      54,    55,    58,    61,    64,    65,    68,    69,    70,    71
+       0,    47,    47,    51,    52,    55,    56,    59,    60,    61,
+      62,    63,    67,    70,    73,    74,    77,    78,    79,    80
 };
 #endif
 
@@ -462,9 +472,9 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "STRING", "NUM", "'{'", "'}'", "','",
-  "':'", "'['", "']'", "$accept", "file", "object", "fields", "pair",
-  "array", "empty_array", "arr_fields", "arr_memb", YY_NULLPTR
+  "$end", "error", "$undefined", "STRING", "NUM", "DAYN", "'{'", "'}'",
+  "','", "':'", "'['", "']'", "$accept", "file", "object", "fields",
+  "pair", "array", "empty_array", "arr_fields", "arr_memb", YY_NULLPTR
 };
 #endif
 
@@ -473,15 +483,15 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   123,   125,    44,    58,    91,
-      93
+       0,   256,   257,   258,   259,   260,   123,   125,    44,    58,
+      91,    93
 };
 # endif
 
-#define YYPACT_NINF -3
+#define YYPACT_NINF -18
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-3)))
+  (!!((Yystate) == (-18)))
 
 #define YYTABLE_NINF -1
 
@@ -492,9 +502,9 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      17,    12,    23,    -3,     6,    -3,    14,    -3,    -3,     1,
-      -3,    21,    -3,    -3,    -2,    -3,    -3,    -3,    -3,    -3,
-      -3,     8,    -3,    -3,    -3,     9,    -3,     8,    -3,    -3
+      -5,    -1,     3,   -18,     6,   -18,    21,   -18,   -18,    10,
+     -18,     5,   -18,   -18,     1,   -18,   -18,   -18,   -18,   -18,
+     -18,    15,   -18,   -18,   -18,    16,   -18,    15,   -18,   -18
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -510,7 +520,7 @@ static const yytype_uint8 yydefact[] =
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -3,    -3,     0,    -3,    15,    16,    -3,    -3,     2
+     -18,   -18,     0,   -18,    11,     8,   -18,   -18,   -17
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -524,32 +534,32 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       3,    19,    20,     1,    12,    13,     1,    21,    22,    15,
-      14,    19,    20,     1,     9,     4,    27,    21,     5,    28,
-      10,    11,     1,     8,     4,    16,    18,     0,     0,    29
+       3,     1,     4,     8,    19,    20,     5,     1,     4,    15,
+      29,    21,    22,    12,    13,     9,     1,    16,    19,    20,
+      14,     1,    18,     0,    27,    21,     0,    28,    10,    11
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     3,     4,     5,     3,     4,     5,     9,    10,     9,
-       9,     3,     4,     5,     8,     3,     7,     9,     6,    10,
-       6,     7,     5,     0,     3,     9,    11,    -1,    -1,    27
+       0,     6,     3,     0,     3,     4,     7,     6,     3,     9,
+      27,    10,    11,     3,     4,     9,     6,     9,     3,     4,
+      10,     6,    11,    -1,     8,    10,    -1,    11,     7,     8
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     5,    12,    13,     3,     6,    14,    15,     0,     8,
-       6,     7,     3,     4,     9,    13,    16,    17,    15,     3,
-       4,     9,    10,    13,    16,    18,    19,     7,    10,    19
+       0,     6,    13,    14,     3,     7,    15,    16,     0,     9,
+       7,     8,     3,     4,    10,    14,    17,    18,    16,     3,
+       4,    10,    11,    14,    17,    19,    20,     8,    11,    20
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    11,    12,    13,    13,    14,    14,    15,    15,    15,
-      15,    15,    16,    17,    18,    18,    19,    19,    19,    19
+       0,    12,    13,    14,    14,    15,    15,    16,    16,    16,
+      16,    16,    17,    18,    19,    19,    20,    20,    20,    20
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -1242,67 +1252,67 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 39 "bison.y" /* yacc.c:1652  */
+#line 47 "bison.y" /* yacc.c:1652  */
     {printf("\n");}
-#line 1248 "y.tab.c" /* yacc.c:1652  */
+#line 1258 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 3:
-#line 43 "bison.y" /* yacc.c:1652  */
+#line 51 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("}");}
-#line 1254 "y.tab.c" /* yacc.c:1652  */
+#line 1264 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 4:
-#line 44 "bison.y" /* yacc.c:1652  */
+#line 52 "bison.y" /* yacc.c:1652  */
     {printf("\n");indent(stack_count);printf("}");}
-#line 1260 "y.tab.c" /* yacc.c:1652  */
+#line 1270 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 51 "bison.y" /* yacc.c:1652  */
-    {indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));text_checker((yyvsp[-2].val),(yyvsp[0].val),check);user_fields_checker((yyvsp[-2].val),user_check);id_str_checker((yyvsp[-2].val),check);created_at_checker((yyvsp[-2].val),check);ret_screen_name_checker((yyvsp[-2].val),ret_status_check);}
-#line 1266 "y.tab.c" /* yacc.c:1652  */
+#line 59 "bison.y" /* yacc.c:1652  */
+    {indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));text_checker((yyvsp[-2].val),(yyvsp[0].val),check);user_fields_checker((yyvsp[-2].val),user_check);id_str_checker((yyvsp[-2].val),check);created_at_checker((yyvsp[-2].val),check);ret_screen_name_checker((yyvsp[-2].val),ret_status_check);ret_screen_name_checker_((yyvsp[-2].val),ret_status_check_);}
+#line 1276 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 52 "bison.y" /* yacc.c:1652  */
+#line 60 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("%s: %s",(yyvsp[-2].val),(yyvsp[0].val));user_fields_checker((yyvsp[-2].val),user_check);}
-#line 1272 "y.tab.c" /* yacc.c:1652  */
+#line 1282 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 53 "bison.y" /* yacc.c:1652  */
+#line 61 "bison.y" /* yacc.c:1652  */
     {printf("\n");indent(stack_count);printf("]");}
-#line 1278 "y.tab.c" /* yacc.c:1652  */
+#line 1288 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 54 "bison.y" /* yacc.c:1652  */
+#line 62 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("]");}
-#line 1284 "y.tab.c" /* yacc.c:1652  */
+#line 1294 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 55 "bison.y" /* yacc.c:1652  */
-    {user_checker((yyvsp[-2].val),user_check,check);ret_useratext_checker((yyvsp[-2].val),ret_status_check);ret_status_checker((yyvsp[-2].val),ret_status_check,retweet);}
-#line 1290 "y.tab.c" /* yacc.c:1652  */
+#line 63 "bison.y" /* yacc.c:1652  */
+    {user_checker((yyvsp[-2].val),user_check,check);ret_useratext_checker((yyvsp[-2].val),ret_status_check);ret_status_checker((yyvsp[-2].val),ret_status_check,retweet);ret_useratext_checker_((yyvsp[-2].val),ret_status_check_);ret_status_checker_((yyvsp[-2].val),ret_status_check_,retweet_);}
+#line 1300 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 68 "bison.y" /* yacc.c:1652  */
+#line 77 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("%s",(yyvsp[0].val));}
-#line 1296 "y.tab.c" /* yacc.c:1652  */
+#line 1306 "y.tab.c" /* yacc.c:1652  */
     break;
 
   case 17:
-#line 69 "bison.y" /* yacc.c:1652  */
+#line 78 "bison.y" /* yacc.c:1652  */
     {indent(stack_count);printf("%s",(yyvsp[0].val));}
-#line 1302 "y.tab.c" /* yacc.c:1652  */
+#line 1312 "y.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1306 "y.tab.c" /* yacc.c:1652  */
+#line 1316 "y.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1533,7 +1543,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 73 "bison.y" /* yacc.c:1918  */
+#line 82 "bison.y" /* yacc.c:1918  */
 
 
 void yyerror(char *s) {
@@ -1635,12 +1645,41 @@ void ret_useratext_checker(const char * string,int* checker){
 
 void ret_status_checker(const char * string,int *checker,int *Checker){
 	if(!strcmp(string,"\"retweeted_status\"")){
-		if(check[1] && check[2])
+		if(checker[1] && checker[2]){
 			Checker[0] = 1;
-	}
-		
+}	
 
 }
+}
+
+
+void ret_screen_name_checker_(const char*string,int *checker){
+	if(!strcmp(string,"\"screen_name\"")){
+		checker[0] = 1;
+}	if(!strcmp(string,"\"text\""))
+		checker[2] = 1;
+}
+
+void ret_useratext_checker_(const char * string,int* checker){
+	if(!strcmp(string,"\"user\"")){
+		if(checker[0] == 1)
+			checker[1] = 1;
+	}
+	else{ 
+		checker[0] = 0;
+}
+
+}
+
+void ret_status_checker_(const char * string,int *checker,int *Checker){
+	if(!strcmp(string,"\"retweeted_status\"")){
+		if(checker[1] && checker[2]){
+			Checker[0] = 1;
+}	
+
+}
+}
+
 
 
 
@@ -1653,10 +1692,10 @@ int main ( int argc, char **argv  )
         yyin = stdin;
 	printf("user : %d\n", check[1]);
 	for(int i = 0;i<3;i++)
-		printf("%d%d\n",*retweet,*(ret_status_check + i));
+		printf("%d%d\n",*retweet_,*(ret_status_check_ + i));
 	yyparse ();
 	for(int i = 0;i<3;i++)
-		printf("%d   %d\n",*retweet,*(ret_status_check + i));
+		printf("%d   %d\n",*retweet_,*(ret_status_check_ + i));
 	printf("\n\n\n");
 	if(!check[0]){
 		printf("JSON file missing text filed\n");
@@ -1675,6 +1714,8 @@ int main ( int argc, char **argv  )
 		return 0;
 }
 	printf("JSON parsed succefuly\n");
+	if(retweet[0] && retweet_[0]);
+	printf("Retweet detected\n");
 	return 0;
 
 }   

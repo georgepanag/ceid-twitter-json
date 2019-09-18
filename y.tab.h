@@ -50,22 +50,24 @@ extern int yydebug;
   enum yytokentype
   {
     STRING = 258,
-    NUM = 259
+    NUM = 259,
+    DAYN = 260
   };
 #endif
 /* Tokens.  */
 #define STRING 258
 #define NUM 259
+#define DAYN 260
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 31 "bison.y" /* yacc.c:1921  */
+#line 38 "bison.y" /* yacc.c:1921  */
  char* val;
 
-#line 69 "y.tab.h" /* yacc.c:1921  */
+#line 71 "y.tab.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;
