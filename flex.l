@@ -19,6 +19,15 @@ DIGIT [0-9]
 JNUM -?{DIGIT1to9}{DIGIT}*(\.{DIGIT}*)?(e[+-]{DIGIT}+)?
 WS [ \t]*
 
+DAY Mon|Tue|Wed|Thu|Fri|Sat|Sun
+MMM Jan|Feb|ar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
+DD [0]{DIGIT1to9}|[1-2]{DIGIT}|[3][0-1]
+HOURS [0-1]{DIGIT}|[2][0-3]
+MINUTS [0-5]{DIGIT}
+YYYY {DIGIT1to9}{DIGIT}{DIGIT}{DIGIT}
+
+DATE {DAY}{WS}{MMM}{WS}{DD}{WS}{HOURS}:{MINUTS}:{MINUTS}{WS}{YYYY}\"$
+
 %%
 
 "{"		{if(start==0){printf("\{\n");start =1;}if(arr_block == 0 && last_string != NULL){indent(stack_count);printf("%s: \{\n",last_string);}if(arr_block == 1){indent(stack_count);printf("{\n");arr_block =0;}stack_count++;return '{';}
@@ -32,6 +41,9 @@ WS [ \t]*
 {JSTRING}	{yylval.val = strdup(yytext);last_string = strdup(yytext);return STRING;}
 {JNUM}		{yylval.val = strdup(yytext);return NUM;}
 .		{inv_tokens();}
+{DATE}		{yylval.val = strdup(yytext);return DAYN;}
+
+
 
 %%
 
